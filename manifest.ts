@@ -1,24 +1,23 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
-import SampleWorkflow from "./workflows/sample_workflow.ts";
-import SampleObjectDatastore from "./datastores/sample_datastore.ts";
+import SampleWorkflow from "./workflows/opt_in_workflow.ts";
+import PlayerData from "./datastores/player_datastore.ts";
 
-/**
- * The app manifest contains the app's configuration. This
- * file defines attributes like app name and description.
- * https://api.slack.com/automation/manifest
- */
 export default Manifest({
   name: "wordsnipe-slack",
-  description: "A template for building Slack apps with Deno",
-  icon: "assets/default_new_app_icon.png",
+  description:
+    `A game in slack, in which each player in a server has a word assigned to them, the goal is to use the word as much as possible without being sniped. 
+    Each usage gets 1 point (can only get one point per message) and players can snipe each other by running a command with the word of another player.
+    A miss results in 5 points lost, but a snipe results in 10 gained points, and eliminates the sniped player.
+    The scores never reset.`,
+  icon: "assets/word_snipe_icon.png",
   workflows: [SampleWorkflow],
-  outgoingDomains: [],
-  datastores: [SampleObjectDatastore],
+  datastores: [PlayerData],
   botScopes: [
     "commands",
     "chat:write",
     "chat:write.public",
     "datastore:read",
     "datastore:write",
+    "app_mentions:read",
   ],
 });

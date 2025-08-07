@@ -1,5 +1,5 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import { SampleFunctionDefinition } from "../functions/sample_function.ts";
+import { OptIn } from "../functions/opt_in_function.ts";
 
 /**
  * A workflow is a set of steps that are executed in order.
