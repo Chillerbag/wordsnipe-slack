@@ -3,14 +3,11 @@ import type PlayerData from "../datastores/player_datastore.ts";
 import { getWord } from "../helpers/get_word.ts";
 
 /**
- * Functions are reusable building blocks of automation that accept
- * inputs, perform calculations, and provide outputs. Functions can
- * be used independently or as steps in workflows.
- * https://api.slack.com/automation/functions/custom
+ * Triggered by: opt_in_trigger - which is invoked with app_mentions !opt_in
  */
 export const OptIn = DefineFunction({
   callback_id: "opt_in",
-  title: "Opt In to Wordsnipe",
+  title: "Opt in to Wordsnipe",
   description: "A function called to opt a user into the game.",
   source_file: "functions/opt_in.ts",
   input_parameters: {

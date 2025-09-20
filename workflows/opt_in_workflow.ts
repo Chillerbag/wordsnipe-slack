@@ -10,9 +10,9 @@ import { OptIn } from "../functions/opt_in_function.ts";
  * https://api.slack.com/automation/forms#add-interactivity
  */
 const SampleWorkflow = DefineWorkflow({
-  callback_id: "sample_workflow",
-  title: "Sample workflow",
-  description: "A sample workflow",
+  callback_id: "opt_in_workflow",
+  title: "Opt In Workflow",
+  description: "Calls the opt-in function to add a user to the game.",
   input_parameters: {
     properties: {
       interactivity: {
