@@ -1,7 +1,7 @@
 import { DefineDatastore, Schema } from "deno-slack-sdk/mod.ts";
 
 const PlayerData = DefineDatastore({
-  name: "WordSnipePlayerData",
+  name: "WordsnipePlayerData",
   primary_key: "user_id",
   attributes: {
     user_id: {

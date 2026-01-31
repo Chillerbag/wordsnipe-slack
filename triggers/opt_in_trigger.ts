@@ -1,28 +1,33 @@
-import type { Trigger } from "deno-slack-sdk/types.ts";
-import { TriggerContextData, TriggerTypes } from "deno-slack-api/mod.ts";
-import SampleWorkflow from "../workflows/opt_in_workflow.ts";
-/**
- * Triggers determine when workflows are executed. A trigger
- * file describes a scenario in which a workflow should be run,
- * such as a user pressing a button or when a specific event occurs.
- * https://api.slack.com/automation/triggers
- */
-const sampleTrigger: Trigger<typeof SampleWorkflow.definition> = {
-  type: TriggerTypes.Shortcut,
-  name: "Sample trigger",
-  description: "A sample trigger",
-  workflow: `#/workflows/${SampleWorkflow.definition.callback_id}`,
+import { Trigger } from "deno-slack-api/types.ts";
+import { TriggerEventTypes, TriggerTypes } from "deno-slack-api/mod.ts";
+import OptInWorkflow from "../workflows/opt_in_workflow.ts";
+
+const OptInTrigger: Trigger<typeof OptInWorkflow.definition> = {
+  type: TriggerTypes.Event,
+  name: "Opt in Trigger",
+  description: "responds to a command and @ of the bot to opt in a user",
+  workflow: `#/workflows/opt_in_workflow`,
+  event: {
+    event_type: TriggerEventTypes.AppMentioned,
+    all_resources: true,
+    filter: {
+      version: 1,
+      root: {
+        statement: "{{data.text}} CONTAINS '!optIn'",
+      },
+    },
+  },
   inputs: {
-    interactivity: {
-      value: TriggerContextData.Shortcut.interactivity,
+    user_id: {
+      value: "{{data.user_id}}",
+    },
+    user_name: {
+      value: "{{data.user_name}}",
     },
     channel: {
-      value: TriggerContextData.Shortcut.channel_id,
-    },
-    user: {
-      value: TriggerContextData.Shortcut.user_id,
+      value: "{{data.channel_id}}",
     },
   },
 };
 
-export default sampleTrigger;
+export default OptInTrigger;

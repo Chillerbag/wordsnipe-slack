@@ -1,10 +1,10 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import { OptIn } from "../functions/opt_in_function.ts";
+import { OptOut } from "../functions/opt_out_function.ts";
 
-const OptInWorkflow = DefineWorkflow({
-  callback_id: "opt_in_workflow",
-  title: "Opt In Workflow",
-  description: "Calls the opt-in function to add a user to the game.",
+const OptOutWorkflow = DefineWorkflow({
+  callback_id: "opt_out_workflow",
+  title: "Opt Out Workflow",
+  description: "Calls the opt-out function to remove a user from the game.",
   input_parameters: {
     properties: {
       channel: {
@@ -20,15 +20,15 @@ const OptInWorkflow = DefineWorkflow({
   },
 });
 
-const optInFunctionStep = OptInWorkflow.addStep(OptIn, {
-  user: OptInWorkflow.inputs.user,
+const optOutFunctionStep = OptOutWorkflow.addStep(OptOut, {
+  user: OptOutWorkflow.inputs.user,
 });
 
 // TODO - if object returns error instead of updatedMsg, handle it.
 // TODO - dm user their word instead of posting in channel: https://api.slack.com/reference/functions/send_dm
-OptInWorkflow.addStep(Schema.slack.functions.SendMessage, {
-  channel_id: OptInWorkflow.inputs.channel,
-  message: optInFunctionStep.outputs.updatedMsg,
+OptOutWorkflow.addStep(Schema.slack.functions.SendMessage, {
+  channel_id: OptOutWorkflow.inputs.channel,
+  message: optOutFunctionStep.outputs.updatedMsg,
 });
 
-export default OptInWorkflow;
+export default OptOutWorkflow;
