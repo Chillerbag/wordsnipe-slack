@@ -39,7 +39,7 @@ export const CheckScore = DefineFunction({
 export default SlackFunction(
   CheckScore,
   async ({ inputs, client }) => {
-    const messageParts: string[] = inputs.messageText.split(" ");
+    const messageParts: Array<string> = inputs.messageText.split(" ");
     const snipedUserMention: string = messageParts[messageParts.length - 2];
     const snipedUserId: string = snipedUserMention.replace("<@", "").replace(
       ">",
